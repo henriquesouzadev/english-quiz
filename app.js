@@ -3,23 +3,24 @@ const title = document.querySelector('.title')
 const resultMessage = document.querySelector('.result-message')
 const divScore = document.createElement('div')
 const correctAnswers = ['C', 'B', 'D', 'A']
-
-const showResultMessage = (percentage) => {
-   title.insertAdjacentElement('beforebegin', divScore)
-   divScore.setAttribute('class', 'result-message bg-success rounded text-center text-light p-3')
-   divScore.innerHTML = `Você acertou <strong>${percentage}%</strong> do quiz!`
-}
+let score = 0
 
 const scoreCalculate = (answers = []) => {
-   let score = 0
-
+   score = 0
+   
    answers.forEach((userAnswer, index) => {
       if (userAnswer === correctAnswers[index]) {
          score += 25
       }
    })
+}
 
-   return score
+const showResultMessage = () => {
+   title.insertAdjacentElement('beforebegin', divScore)
+   divScore.setAttribute('class', 'result-message bg-success rounded text-center text-light p-3')
+   divScore.innerHTML = `Você acertou <strong>${score}%</strong> do quiz!`
+
+   scroll({ top, behavior: 'smooth' })
 }
 
 const getUserAnswers = () => {
@@ -37,10 +38,9 @@ const submitUserAnswers = (event) => {
    event.preventDefault()
 
    const userAnswers = getUserAnswers()
-   const finalScore = scoreCalculate(userAnswers)
 
-   showResultMessage(finalScore)
-   scroll({ top, behavior: 'smooth' })
+   scoreCalculate(userAnswers)
+   showResultMessage()
 }
 
 form.addEventListener('submit', submitUserAnswers)
