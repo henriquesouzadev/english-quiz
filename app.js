@@ -9,7 +9,8 @@ const scoreCalculate = (answers = []) => {
    score = 0
    
    answers.forEach((userAnswer, index) => {
-      if (userAnswer === correctAnswers[index]) {
+      const isUserAnswerCorrect = userAnswer === correctAnswers[index]
+      if (isUserAnswerCorrect) {
          score += 25
       }
    })
@@ -24,14 +25,14 @@ const showResultMessage = () => {
 }
 
 const getUserAnswers = () => {
-   const answers = [
-      form.inputQuestion1.value,
-      form.inputQuestion2.value,
-      form.inputQuestion3.value,
-      form.inputQuestion4.value
-   ]
+   const userAnswers = []
 
-   return answers
+   correctAnswers.forEach((_, index) => {
+      const userAnswer = form[`inputQuestion${index + 1}`].value
+      userAnswers.push(userAnswer)
+   })
+
+   return userAnswers
 }
 
 const submitUserAnswers = (event) => {
